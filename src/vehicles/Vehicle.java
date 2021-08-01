@@ -2,28 +2,27 @@ package vehicles;
 
 public interface Vehicle {
     void move();
-
     void stop();
 }
 
-interface VehicleWithWheels {
+interface VehicleWithWheels extends Vehicle{
     int numberOfWheels();
 }
 
-interface VehicleWithEngine {
+interface VehicleWithEngine extends Vehicle{
     int horsePower(); //TODO: Not very well encapsulated
     int torque();
 }
 
-interface VehicleWithTransmission {
+interface VehicleWithTransmission extends Vehicle{
     boolean isAutomatic();
 }
 
-interface LandVehicle {
+interface LandVehicle extends Vehicle{
 
 }
 
-abstract class Car implements Vehicle, VehicleWithEngine, VehicleWithTransmission, LandVehicle {
+abstract class Car implements VehicleWithEngine, VehicleWithTransmission, LandVehicle , VehicleWithWheels{
     Color color;
     double weight;
     final int numDoors;
@@ -87,6 +86,11 @@ class BMWCar extends Car {
     @Override
     public boolean isAutomatic() {
         return automatic;
+    }
+
+    @Override
+    public int numberOfWheels() {
+        return 4;
     }
 }
 
