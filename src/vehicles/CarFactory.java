@@ -18,10 +18,10 @@ public class CarFactory {
     }
 
     public static void testCars() {
-        BMWX5 car1 = new BMWX5(true, new Blue(), 5);
-        BMWX5 car2 = new BMWX5(false, new Red(), 7);
-        BMWX3 car3 = new BMWX3(true, new Green());
-        AudiQ5 car4 = new AudiQ5(new AudiBlue());
+        BMWX5 car1 = new BMWX5(true, Color.BLUE, 5);
+        BMWX5 car2 = new BMWX5(false, Color.RED, 7);
+        BMWX3 car3 = new BMWX3(true, Color.GREEN);
+        AudiQ5 car4 = new AudiQ5(Color.AUDIBLUE);
 
         Vehicle[] arrayOfVehicles = new Vehicle[]{car1, car2, car3, car4};
 

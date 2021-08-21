@@ -2,7 +2,6 @@ package vehicles;
 
 public interface Vehicle {
     void move();
-
     void stop();
 }
 
@@ -11,9 +10,7 @@ interface VehicleWithWheels extends Vehicle {
 }
 
 interface VehicleWithEngine extends Vehicle {
-    int horsePower(); //TODO: Not very well encapsulated
-
-    int torque();
+    Engine engine();
 }
 
 interface VehicleWithTransmission extends Vehicle {
@@ -48,14 +45,12 @@ abstract class AbstractCar implements VehicleWithEngine, VehicleWithTransmission
 
 class BMWCar extends AbstractCar {
 
-    private final int horsePower;
-    private final int torque;
     private final boolean automatic;
+    private final Engine engine;
 
-    public BMWCar(int numDoors, int passengerCapacity, int horsePower, int torque, boolean automatic, String carModel) {
+    public BMWCar(int numDoors, int passengerCapacity, boolean automatic, String carModel, Engine engine) {
         super(numDoors, passengerCapacity, carModel);
-        this.horsePower = horsePower;
-        this.torque = torque;
+        this.engine= engine;
         this.automatic = automatic;
     }
 
@@ -80,16 +75,6 @@ class BMWCar extends AbstractCar {
     }
 
     @Override
-    public int horsePower() {
-        return horsePower;
-    }
-
-    @Override
-    public int torque() {
-        return torque;
-    }
-
-    @Override
     public boolean isAutomatic() {
         return automatic;
     }
@@ -97,6 +82,11 @@ class BMWCar extends AbstractCar {
     @Override
     public int numberOfWheels() {
         return 4;
+    }
+
+    @Override
+    public Engine engine() {
+        return this.engine;
     }
 
 //    @Override
@@ -108,7 +98,7 @@ class BMWCar extends AbstractCar {
 class BMWX3 extends BMWCar {
 
     public BMWX3(boolean automatic, Color color) {
-        super(4, 5, 340, 1000, automatic, "X3");
+        super(4, 5, automatic, "X3", new V6Engine());
         this.setColor(color);
     }
 
@@ -125,7 +115,7 @@ class BMWX3 extends BMWCar {
 
 class BMWX5 extends BMWCar {
     public BMWX5(boolean automatic, Color color, int passengerCapacity) {
-        super(4, passengerCapacity, 400, 1000, automatic, "X5");
+        super(4, passengerCapacity, automatic, "X5", new V8Engine());
         this.setColor(color);
     }
 
@@ -142,6 +132,7 @@ class BMWX5 extends BMWCar {
 
 class AudiQ5 extends AbstractCar {
 
+    private final Engine engine = new V6Engine();
     public AudiQ5(Color color) {
         super(4, 5, "Q5");
         this.color = color;
@@ -163,16 +154,6 @@ class AudiQ5 extends AbstractCar {
     }
 
     @Override
-    public int horsePower() {
-        return 240;
-    }
-
-    @Override
-    public int torque() {
-        return 800;
-    }
-
-    @Override
     public boolean isAutomatic() {
         return true;
     }
@@ -186,74 +167,89 @@ class AudiQ5 extends AbstractCar {
     public void setWeight(double weight) {
         throw new RuntimeException("Cannot change weight after manufacturing!!");
     }
-}
-
-interface Color {
-}
-
-//TODO: Why do I need to instantiate new Colors? Can I have a single Color Instance?
-final class Violet implements Color {
 
     @Override
-    public String toString() {
-        return "Violet";
-    }
-
-}
-
-final class Indigo implements Color {
-
-    @Override
-    public String toString() {
-        return "Indigo";
+    public Engine engine() {
+        return this.engine;
     }
 }
 
-final class Blue implements Color {
+enum Color {
+    VIOLET(7), INDIGO(6), BLUE(5), GREEN(4), YELLOW(5), ORANGE(3), RED(2), AUDIBLUE(1);
 
-    @Override
-    public String toString() {
-        return "Blue";
-    }
+    private int colorNumber;
 
-}
-
-final class Green implements Color {
-
-    @Override
-    public String toString() {
-        return "Green";
+    Color(int color) {
+        this.colorNumber = color;
     }
 }
 
-final class Yellow implements Color {
-
-    @Override
-    public String toString() {
-        return "Yellow";
-    }
-}
-
-final class Orange implements Color {
-
-    @Override
-    public String toString() {
-        return "Orange";
-    }
-}
-
-final class Red implements Color {
-
-    @Override
-    public String toString() {
-        return "Red";
-    }
-}
-
-final class AudiBlue implements Color {
-
-    @Override
-    public String toString() {
-        return "Indigo";
-    }
-}
+//interface Color {
+//}
+//
+////TODO: Why do I need to instantiate new Colors? Can I have a single Color Instance?
+//final class Violet implements Color {
+//
+//    @Override
+//    public String toString() {
+//        return "Violet";
+//    }
+//
+//}
+//
+//final class Indigo implements Color {
+//
+//    @Override
+//    public String toString() {
+//        return "Indigo";
+//    }
+//}
+//
+//final class Blue implements Color {
+//
+//    @Override
+//    public String toString() {
+//        return "Blue";
+//    }
+//
+//}
+//
+//final class Green implements Color {
+//
+//    @Override
+//    public String toString() {
+//        return "Green";
+//    }
+//}
+//
+//final class Yellow implements Color {
+//
+//    @Override
+//    public String toString() {
+//        return "Yellow";
+//    }
+//}
+//
+//final class Orange implements Color {
+//
+//    @Override
+//    public String toString() {
+//        return "Orange";
+//    }
+//}
+//
+//final class Red implements Color {
+//
+//    @Override
+//    public String toString() {
+//        return "Red";
+//    }
+//}
+//
+//final class AudiBlue implements Color {
+//
+//    @Override
+//    public String toString() {
+//        return "Indigo";
+//    }
+//}
